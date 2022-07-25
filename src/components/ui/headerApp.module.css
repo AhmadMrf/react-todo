@@ -1,0 +1,9 @@
+.get-info-title {
+  font-weight: 700;
+  background: var(--main-color);
+  color: #fff;
+  font-size: 1.3rem;
+  padding: 2rem 0;
+  padding-left: 3rem;
+  text-shadow: 1px 1px 5px #000;
+}

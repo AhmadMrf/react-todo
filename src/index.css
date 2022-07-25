@@ -1,0 +1,14 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: wheat;
+}
+
+:root {
+  --main-color: rgb(41, 245, 251);
+  --todo-color: rgb(41, 145, 251);
+}

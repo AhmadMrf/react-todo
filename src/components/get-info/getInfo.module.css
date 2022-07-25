@@ -1,0 +1,56 @@
+.get-info-wrapper {
+  min-height: 100%;
+  padding-bottom: 1rem;
+}
+
+.get-info-inputs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 1rem 2rem;
+  gap: 2rem;
+}
+.get-info-inputs > div {
+  display: flex;
+  align-items: center;
+  gap: calc(1.5vw + 5px);
+}
+
+.get-info-inputs label {
+  text-transform: capitalize;
+}
+.get-info-input-username input {
+  padding-left: 0.5rem;
+  height: 2rem;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #000;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.get-info-input-user-color input {
+  border: none;
+  outline: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.get-info-wrapper button {
+  margin: 0 auto;
+  display: block;
+  width: 5rem;
+  height: 2.5rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  border: none;
+  background: var(--main-color);
+  border-radius: 5px;
+  text-shadow: 1px 1px 2px #fff;
+}
+.get-info-wrapper button:hover {
+  filter: brightness(85%);
+  color: #fff;
+}
