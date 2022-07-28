@@ -8,15 +8,15 @@
 .add-todo-wrapper > div {
   width: min(80%, 500px);
 }
-.input {
+.input input {
   width: 100%;
-  border: 5px solid;
 }
 .new-todo-content {
   display: flex;
   gap: calc(1.5vw + 5px);
 }
 .new-todo-content textarea {
+  padding: 0.5rem;
   width: 100%;
   resize: vertical;
   outline: none;
@@ -27,4 +27,9 @@
 }
 .new-todo-content label {
   text-transform: capitalize;
+}
+.new-todo-buttons {
+  display: flex;
+  justify-content: center;
+  gap: min(3rem, 5vw);
 }

@@ -3,7 +3,7 @@ import styles from "./inputTag.module.css";
 
 const InputTag = (props) => {
   return (
-    <div className={`${styles["input-container"]} ${props.className}`}>
+    <div className={`${styles["input-container"]} ${props.className || ""}`}>
       <label htmlFor={props.id}>{props.label}</label>
       <input type={props.type} name="newTodo" id={props.id} />
     </div>

@@ -1,14 +1,14 @@
 import GetInfo from "./components/get-info/GetInfo";
 import TodosWrapper from "./components/todos/TodosWrapper";
-import AppContainer from "./components/ui/AppContainer";
+import Container from "./components/ui/Container";
 import AddTodo from "./components/add-todos/AddTodo";
 function App() {
   return (
-    <AppContainer>
+    <Container>
       <AddTodo />
       {/* <TodosWrapper /> */}
       {/* <GetInfo /> */}
-    </AppContainer>
+    </Container>
   );
 }
 export default App;

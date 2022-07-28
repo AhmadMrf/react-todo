@@ -1,0 +1,12 @@
+.add-todo-header-contaner {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding-right: 2rem;
+}
+.add-todo-header-color {
+  font-size: 1rem;
+  color: #000;
+  font-weight: initial;
+}

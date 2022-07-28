@@ -31,7 +31,7 @@ const TodosWrapper = () => {
   ];
   return (
     <section>
-      <HeaderApp> Hi , Ahmad </HeaderApp>
+      <HeaderApp className="font"> Hi , Ahmad </HeaderApp>
       <TodosList todos={todosData} />
     </section>
   );
