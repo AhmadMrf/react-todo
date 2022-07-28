@@ -1,0 +1,21 @@
+.input-container {
+  display: flex;
+  align-items: center;
+  gap: calc(1.5vw + 5px);
+}
+
+.input-container label {
+  text-transform: capitalize;
+}
+.input-container input {
+  padding-left: 0.5rem;
+  height: 2rem;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #b6b6b6;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.input-container input:focus {
+  border-color: #1c1c1c;
+}

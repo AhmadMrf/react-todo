@@ -4,7 +4,7 @@
   width: min(750px, 80vw);
   min-width: 300px;
   font-family: "Roboto", sans-serif;
-  border-radius: 5px;
-  overflow: hidden;
   background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 5px #626262;
 }

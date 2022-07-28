@@ -1,0 +1,8 @@
+.todo-date {
+  font-size: 0.7rem;
+  display: flex;
+  gap: 0.2rem;
+  align-items: center;
+  color: #4c4c4c;
+  /* flex-direction: column; */
+}
