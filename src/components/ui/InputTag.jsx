@@ -5,7 +5,14 @@ const InputTag = (props) => {
   return (
     <div className={`${styles["input-container"]} ${props.className || ""}`}>
       <label htmlFor={props.id}>{props.label}</label>
-      <input type={props.type} name="newTodo" id={props.id} />
+      <input
+        onChange={(e) => props.onChangeHandler(e.target.value)}
+        type={props.type}
+        name="newTodo"
+        id={props.id}
+        value={props.value}
+        className={props.error ? styles["input-error"] : ""}
+      />
     </div>
   );
 };

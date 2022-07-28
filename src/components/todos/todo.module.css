@@ -11,7 +11,7 @@
   border: none;
 }
 .todo-wrapper:hover {
-  transform: scale(1.05);
+  /* transform: scale(1.05); */
   border-radius: 3px;
   z-index: 1;
   border: none;
@@ -29,7 +29,6 @@
 }
 .todo-wrapper:hover:before {
   width: 5px;
-  border-radius: 3px 0 0 3px;
 }
 .todo-header {
   display: flex;
@@ -71,7 +70,7 @@
 .todo-content {
   margin-top: 0.5rem;
   padding: 0 1rem;
-  max-height: 2.5ch;
+  max-height: 2.2ch;
   overflow: hidden;
   transition: max-height cubic-bezier(0, 1.02, 0.83, 0.99) 0.3s;
 }

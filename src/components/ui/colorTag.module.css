@@ -16,3 +16,6 @@
   overflow: hidden;
   cursor: pointer;
 }
+.get-color input::-moz-color-swatch {
+  border: none;
+}

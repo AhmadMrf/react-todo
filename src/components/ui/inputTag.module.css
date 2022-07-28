@@ -19,3 +19,8 @@
 .input-container input:focus {
   border-color: #1c1c1c;
 }
+input.input-error,
+input.input-error:focus {
+  border-color: red;
+  color: red;
+}
