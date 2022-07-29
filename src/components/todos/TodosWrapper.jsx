@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
+
 import HeaderApp from "../ui/HeaderApp";
 import TodosList from "./TodosList";
+import { IconContext } from "react-icons";
+import { FiEdit, FiExternalLink } from "react-icons/fi";
+import authContext from "../../context/authContext";
 const TodosWrapper = ({ userInfo: { userName, color } }) => {
+  const authCtx = useContext(authContext);
   const todosData = [
     {
       id: 1,
@@ -30,11 +35,20 @@ const TodosWrapper = ({ userInfo: { userName, color } }) => {
     }
   ];
   // console.log(props);
-
+  const editIconStyles = {
+    style: { verticalAlign: "middle", marginLeft: ".5rem", cursor: "pointer" }
+  };
   return (
     <section>
       <HeaderApp style={{ "--main-color": color }} className="font">
         Hi , {userName}
+        <IconContext.Provider value={editIconStyles}>
+          <FiEdit title="Edit Data" onClick={() => authCtx.onLogedOut(false)} />
+          <FiExternalLink
+            title="Exit"
+            onClick={() => authCtx.onLogedOut(false)}
+          />
+        </IconContext.Provider>
       </HeaderApp>
       <TodosList todos={todosData} />
     </section>

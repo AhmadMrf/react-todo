@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import HeaderApp from "../ui/HeaderApp";
 import InputTag from "../ui/InputTag";
 import styles from "./getInfo.module.css";
 import CommonStyles from "../ui/commonUi.module.css";
 import ColorTag from "../ui/ColorTag";
 import TodosWrapper from "../todos/TodosWrapper";
+import authContext from "../../context/authContext";
 
 const GetInfo = () => {
   const [userData, setUserData] = useState({ userName: "", color: "#29f5fb" });
   const [isValid, setIsValid] = useState({ isValid: " ", errorMsg: "" });
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const authCtx = useContext(authContext);
 
   const validation = (userInput) => {
     if (userInput.length < 4 || userInput.length > 20) {
@@ -34,9 +35,7 @@ const GetInfo = () => {
   const clickHandler = () => {
     if (validation(userData.userName)) {
       localStorage.setItem("todo", JSON.stringify(userData));
-      console.log(userData);
-
-      setIsLoggedIn(true);
+      authCtx.onlogedIn(true);
     } else {
       setIsValid({
         isValid: false,
@@ -45,7 +44,7 @@ const GetInfo = () => {
     }
   };
 
-  return isLoggedIn ? (
+  return authCtx.isLoggedIn ? (
     <TodosWrapper userInfo={userData} />
   ) : (
     <section className={styles["get-info-wrapper"]}>

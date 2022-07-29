@@ -15,7 +15,7 @@
   border-radius: 3px;
   z-index: 1;
   border: none;
-  box-shadow: 0 0.5px 5px var(--todo-color);
+  box-shadow: 0 1px 5px var(--todo-color);
 }
 .todo-wrapper:before {
   content: "";
