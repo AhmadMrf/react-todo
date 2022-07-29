@@ -2,8 +2,15 @@
   display: flex;
   align-items: center;
   gap: calc(1.5vw + 5px);
+  position: relative;
 }
-
+.error-msg {
+  position: absolute;
+  top: -2px;
+  right: 5px;
+  font-size: 0.6rem;
+  color: red;
+}
 .input-container label {
   text-transform: capitalize;
 }

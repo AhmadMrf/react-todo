@@ -4,6 +4,7 @@ import styles from "./inputTag.module.css";
 const InputTag = (props) => {
   return (
     <div className={`${styles["input-container"]} ${props.className || ""}`}>
+      <p className={styles["error-msg"]}>{props.errorMsg}</p>
       <label htmlFor={props.id}>{props.label}</label>
       <input
         onChange={(e) => props.onChangeHandler(e.target.value)}

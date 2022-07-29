@@ -4,33 +4,61 @@ import InputTag from "../ui/InputTag";
 import styles from "./getInfo.module.css";
 import CommonStyles from "../ui/commonUi.module.css";
 import ColorTag from "../ui/ColorTag";
+import TodosWrapper from "../todos/TodosWrapper";
 
 const GetInfo = () => {
-  const [userName, setUserName] = useState("");
-  const [isValid, setIsValid] = useState(undefined);
+  const [userData, setUserData] = useState({ userName: "", color: "#29f5fb" });
+  const [isValid, setIsValid] = useState({ isValid: " ", errorMsg: "" });
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const ChangeTextInput = (userNameInput) => {
-    setUserName(userNameInput);
-    if (userName.length < 3 && userName.length > 20) {
-      setIsValid(false);
+  const validation = (userInput) => {
+    if (userInput.length < 4 || userInput.length > 20) {
+      setIsValid({ isValid: false, errorMsg: "" });
+    } else {
+      setIsValid({ isValid: true, errorMsg: "" });
+      return true;
     }
   };
-  const ChangeColorInput = (themeColorInput) => {
-    // setThemeColor(themeColorInput);
-  };
-  const clickHandler = (e) => {};
 
-  return (
+  const ChangeTextInput = (userNameInput) => {
+    validation(userNameInput);
+    setUserData((prev) => {
+      return { ...prev, userName: userNameInput };
+    });
+  };
+  const ChangeColorInput = (themeColorInput) => {
+    setUserData((prev) => {
+      return { ...prev, color: themeColorInput };
+    });
+  };
+  const clickHandler = () => {
+    if (validation(userData.userName)) {
+      localStorage.setItem("todo", JSON.stringify(userData));
+      console.log(userData);
+
+      setIsLoggedIn(true);
+    } else {
+      setIsValid({
+        isValid: false,
+        errorMsg: "user name must be between 4 and 20"
+      });
+    }
+  };
+
+  return isLoggedIn ? (
+    <TodosWrapper userInfo={userData} />
+  ) : (
     <section className={styles["get-info-wrapper"]}>
       <HeaderApp className="font">welcome to todo App</HeaderApp>
       <div className={styles["get-info-inputs"]}>
         <InputTag
-          error={isValid}
+          error={!isValid.isValid}
           onChangeHandler={ChangeTextInput}
           type="text"
           id="newUser"
           label="user name"
-          value={userName}
+          value={userData.userName}
+          errorMsg={isValid.errorMsg}
         />
         <ColorTag
           onChangeHandler={ChangeColorInput}

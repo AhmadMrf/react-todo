@@ -1,7 +1,7 @@
 import React from "react";
 import HeaderApp from "../ui/HeaderApp";
 import TodosList from "./TodosList";
-const TodosWrapper = () => {
+const TodosWrapper = ({ userInfo: { userName, color } }) => {
   const todosData = [
     {
       id: 1,
@@ -29,9 +29,13 @@ const TodosWrapper = () => {
       color: "#cd12ab"
     }
   ];
+  // console.log(props);
+
   return (
     <section>
-      <HeaderApp className="font"> Hi , Ahmad </HeaderApp>
+      <HeaderApp style={{ "--main-color": color }} className="font">
+        Hi , {userName}
+      </HeaderApp>
       <TodosList todos={todosData} />
     </section>
   );
