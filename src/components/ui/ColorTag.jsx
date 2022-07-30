@@ -1,16 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./colorTag.module.css";
 
 const ColorTag = (props) => {
+  const [color, setColor] = useState("#29f5fb");
+  const colorInputHandler = (e) => {
+    setColor(e.target.value);
+    props.onChangeHandler(e.target.value);
+  };
   return (
     <div className={`${styles["get-color"]} ${props.className || ""}`}>
-      <label htmlFor={props.id}>{props.label}</label>
-      <input
-        onChange={(e) => props.onChangeHandler(e.target.value)}
-        defaultValue="#29f5fb"
-        type="color"
-        id={props.id}
-      />
+      <label style={{ "--color-input": color }} htmlFor={props.id}>
+        {props.label}
+      </label>
+      <input onChange={colorInputHandler} type="color" id={props.id} />
     </div>
   );
 };

@@ -5,17 +5,31 @@
 }
 
 .get-color label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   text-transform: capitalize;
+  --color-input: #29f5fb;
+}
+.get-color label:after {
+  content: "";
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  display: inline-block;
+  background-color: var(--color-input);
 }
 .get-color input {
-  border: none;
+  display: none;
+  /* border: none;
   outline: none;
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 50%;
   overflow: hidden;
-  cursor: pointer;
+  cursor: pointer; */
 }
-.get-color input::-moz-color-swatch {
+/* .get-color input::-moz-color-swatch {
   border: none;
-}
+} */
