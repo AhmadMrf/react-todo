@@ -36,6 +36,7 @@ const GetInfo = () => {
     if (validation(userData.userName)) {
       localStorage.setItem("todo", JSON.stringify(userData));
       authCtx.onlogedIn(true);
+      authCtx.onEditUser(userData);
     } else {
       setIsValid({
         isValid: false,
@@ -45,7 +46,7 @@ const GetInfo = () => {
   };
 
   return authCtx.isLoggedIn ? (
-    <TodosWrapper userInfo={userData} />
+    <TodosWrapper userInfo={authCtx.userData} />
   ) : (
     <section className={styles["get-info-wrapper"]}>
       <HeaderApp className="font">welcome to todo App</HeaderApp>

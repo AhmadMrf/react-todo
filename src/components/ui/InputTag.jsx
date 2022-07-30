@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import styles from "./inputTag.module.css";
 
 const InputTag = (props) => {

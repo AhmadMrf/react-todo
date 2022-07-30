@@ -1,12 +1,17 @@
 import React, { useContext } from "react";
-
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 import HeaderApp from "../ui/HeaderApp";
 import TodosList from "./TodosList";
 import { IconContext } from "react-icons";
 import { FiEdit, FiExternalLink } from "react-icons/fi";
 import authContext from "../../context/authContext";
-const TodosWrapper = ({ userInfo: { userName, color } }) => {
-  const authCtx = useContext(authContext);
+const TodosWrapper = () => {
+  const {
+    userData: { userName, color },
+    onLogedOut
+  } = useContext(authContext);
+
   const todosData = [
     {
       id: 1,
@@ -34,7 +39,20 @@ const TodosWrapper = ({ userInfo: { userName, color } }) => {
       color: "#cd12ab"
     }
   ];
-  // console.log(props);
+  const editUserData = () => {
+    const Alert = withReactContent(Swal);
+
+    Alert.fire({
+      position: "center",
+      titleText: "Edit , Add Later",
+      padding: "1rem",
+      width: "auto",
+      icon: "info",
+      timer: 2500,
+      showConfirmButton: false,
+      iconColor: color
+    });
+  };
   const editIconStyles = {
     style: { verticalAlign: "middle", marginLeft: ".5rem", cursor: "pointer" }
   };
@@ -43,11 +61,8 @@ const TodosWrapper = ({ userInfo: { userName, color } }) => {
       <HeaderApp style={{ "--main-color": color }} className="font">
         Hi , {userName}
         <IconContext.Provider value={editIconStyles}>
-          <FiEdit title="Edit Data" onClick={() => authCtx.onLogedOut(false)} />
-          <FiExternalLink
-            title="Exit"
-            onClick={() => authCtx.onLogedOut(false)}
-          />
+          <FiEdit title="Edit Data" onClick={editUserData} />
+          <FiExternalLink title="Exit" onClick={() => onLogedOut(false)} />
         </IconContext.Provider>
       </HeaderApp>
       <TodosList todos={todosData} />

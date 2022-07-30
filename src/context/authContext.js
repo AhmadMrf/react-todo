@@ -2,9 +2,9 @@ import React from "react";
 
 const authContext = React.createContext({
   isLoggedIn: false,
-  userName: "",
-  color: "",
+  userData: {},
   onlogedIn: () => {},
-  onLogedOut: () => {}
+  onLogedOut: () => {},
+  onEditUser: () => {}
 });
 export default authContext;

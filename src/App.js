@@ -6,27 +6,33 @@ import authContext from "./context/authContext";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  let userData = JSON.parse(localStorage.getItem("todo"));
+  const [userData, setUserData] = useState({ userName: "", color: "#29f5fb" });
+
+  // let userData = JSON.parse(localStorage.getItem("todo"));
 
   useEffect(() => {
-    if (userData) setIsLoggedIn(true);
+    // if (userData) setIsLoggedIn(true);
   }, []);
 
   const logInHandle = (logState) => {
     setIsLoggedIn(logState);
   };
   const logOutHandle = (logState) => {
-    localStorage.removeItem("todo");
+    // localStorage.removeItem("todo");
     setIsLoggedIn(logState);
+  };
+  const editUserHandler = ({ userName, color }) => {
+    // localStorage.removeItem("todo");
+    setUserData({ userName, color });
   };
   return (
     <authContext.Provider
       value={{
-        isLoggedIn: isLoggedIn,
-        userName: "",
-        color: "",
+        isLoggedIn,
+        userData,
         onlogedIn: logInHandle,
-        onLogedOut: logOutHandle
+        onLogedOut: logOutHandle,
+        onEditUser: editUserHandler
       }}
     >
       <Container>
