@@ -11,7 +11,6 @@ const GetInfo = () => {
   const [userData, setUserData] = useState({ userName: "", color: "#29f5fb" });
   const [isValid, setIsValid] = useState({ isValid: " ", errorMsg: "" });
   const authCtx = useContext(authContext);
-
   const validation = (userInput) => {
     if (userInput.length < 4 || userInput.length > 20) {
       setIsValid({ isValid: false, errorMsg: "" });
@@ -34,9 +33,22 @@ const GetInfo = () => {
   };
   const clickHandler = () => {
     if (validation(userData.userName)) {
-      localStorage.setItem("todo", JSON.stringify(userData));
-      authCtx.onlogedIn(true);
-      authCtx.onEditUser(userData);
+      const users = JSON.parse(localStorage.getItem("users")) || [];
+
+      let existedUser = users.find(
+        (user) =>
+          userData.userName.toLowerCase() ===
+          user.userData.userName.toLowerCase()
+      );
+      if (existedUser) {
+        authCtx.onlogedIn(true);
+        authCtx.onEditUser(existedUser.userData);
+      } else {
+        const newUsers = [...users, { userData, todo: [] }];
+        localStorage.setItem("users", JSON.stringify(newUsers));
+        authCtx.onlogedIn(true);
+        authCtx.onEditUser(userData);
+      }
     } else {
       setIsValid({
         isValid: false,
