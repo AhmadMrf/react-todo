@@ -4,14 +4,16 @@ import withReactContent from "sweetalert2-react-content";
 import HeaderApp from "../ui/HeaderApp";
 import TodosList from "./TodosList";
 import { IconContext } from "react-icons";
-import { FiEdit, FiExternalLink } from "react-icons/fi";
+import { FiEdit, FiExternalLink, FiPlusCircle } from "react-icons/fi";
 import authContext from "../../context/authContext";
+import AddTodo from "../add-todos/AddTodo";
 
 const TodosWrapper = () => {
   const {
     userData: { userName, color },
     onLogedOut
   } = useContext(authContext);
+  const [newTodo, setNewTodo] = useState(false);
   const [todos, setTodos] = useState({});
   const todosData = [
     {
@@ -40,12 +42,20 @@ const TodosWrapper = () => {
       color: "#cd12ab"
     }
   ];
+
+  const logOutHandler = () => {
+    localStorage.removeItem("ActiveUser");
+    onLogedOut(false);
+  };
+  const addNewTodoHandler = () => {
+    setNewTodo(true);
+  };
   const editUserData = () => {
     const Alert = withReactContent(Swal);
 
     Alert.fire({
       position: "center",
-      titleText: "Edit , Add Later",
+      titleText: "Edit , Will Be Added Later",
       padding: "1rem",
       width: "auto",
       icon: "info",
@@ -57,15 +67,18 @@ const TodosWrapper = () => {
   const editIconStyles = {
     style: { verticalAlign: "middle", marginLeft: ".5rem", cursor: "pointer" }
   };
-  return (
+  return newTodo ? (
+    <AddTodo color={color} />
+  ) : (
     <section>
-      <HeaderApp style={{ "--main-color": color }} className="font">
-        Hi , {userName}
-        <IconContext.Provider value={editIconStyles}>
-          <FiEdit title="Edit Data" onClick={editUserData} />
-          <FiExternalLink title="Exit" onClick={() => onLogedOut(false)} />
-        </IconContext.Provider>
-      </HeaderApp>
+      <IconContext.Provider value={editIconStyles}>
+        <HeaderApp style={{ "--main-color": color }} className="font">
+          Hi , {userName}
+          <FiEdit title="Edit user" onClick={editUserData} />
+          <FiExternalLink title="Exit" onClick={logOutHandler} />
+          <FiPlusCircle title="add new todo" onClick={addNewTodoHandler} />
+        </HeaderApp>
+      </IconContext.Provider>
       <TodosList todos={todosData} />
     </section>
   );

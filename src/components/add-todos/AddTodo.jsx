@@ -5,10 +5,10 @@ import InputTag from "../ui/InputTag";
 import AddTodoHeader from "./AddTodoHeader";
 import styles from "./addTodo.module.css";
 import commonStyles from "../ui/commonUi.module.css";
-const AddTodo = () => {
+const AddTodo = (props) => {
   return (
     <section>
-      <HeaderApp className="font">
+      <HeaderApp style={{ "--main-color": props.color }} className="font">
         <AddTodoHeader />
       </HeaderApp>
       <div className={styles["add-todo-wrapper"]}>

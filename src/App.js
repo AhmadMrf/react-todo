@@ -8,23 +8,30 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState({ userName: "", color: "#29f5fb" });
 
-  // let userData = JSON.parse(localStorage.getItem("todo"));
-
-  useEffect(() => {
-    // if (userData) setIsLoggedIn(true);
-  }, []);
-
   const logInHandle = (logState) => {
     setIsLoggedIn(logState);
   };
   const logOutHandle = (logState) => {
-    // localStorage.removeItem("todo");
     setIsLoggedIn(logState);
   };
   const editUserHandler = ({ userName, color }) => {
-    // localStorage.removeItem("todo");
     setUserData({ userName, color });
   };
+  let ActiveUser = JSON.parse(localStorage.getItem("ActiveUser"));
+  const users = JSON.parse(localStorage.getItem("users")) || [];
+
+  useEffect(() => {
+    if (ActiveUser) {
+      let existedUser = users.find(
+        (user) =>
+          ActiveUser.userName.toLowerCase() ===
+          user.userData.userName.toLowerCase()
+      );
+      editUserHandler(existedUser.userData);
+      setIsLoggedIn(true);
+    }
+  }, []);
+
   return (
     <authContext.Provider
       value={{
@@ -36,7 +43,11 @@ function App() {
       }}
     >
       <Container>
-        {isLoggedIn ? <TodosWrapper userInfo={userData} /> : <GetInfo />}
+        {isLoggedIn ? (
+          <TodosWrapper userInfo={userData} />
+        ) : (
+          <GetInfo users={users} />
+        )}
       </Container>
     </authContext.Provider>
   );

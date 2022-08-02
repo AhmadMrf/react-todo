@@ -7,7 +7,7 @@ import ColorTag from "../ui/ColorTag";
 import TodosWrapper from "../todos/TodosWrapper";
 import authContext from "../../context/authContext";
 
-const GetInfo = () => {
+const GetInfo = (props) => {
   const [userData, setUserData] = useState({ userName: "", color: "#29f5fb" });
   const [isValid, setIsValid] = useState({ isValid: " ", errorMsg: "" });
   const authCtx = useContext(authContext);
@@ -33,9 +33,7 @@ const GetInfo = () => {
   };
   const clickHandler = () => {
     if (validation(userData.userName)) {
-      const users = JSON.parse(localStorage.getItem("users")) || [];
-
-      let existedUser = users.find(
+      let existedUser = props.users.find(
         (user) =>
           userData.userName.toLowerCase() ===
           user.userData.userName.toLowerCase()
@@ -43,11 +41,16 @@ const GetInfo = () => {
       if (existedUser) {
         authCtx.onlogedIn(true);
         authCtx.onEditUser(existedUser.userData);
+        localStorage.setItem(
+          "ActiveUser",
+          JSON.stringify(existedUser.userData)
+        );
       } else {
-        const newUsers = [...users, { userData, todo: [] }];
+        const newUsers = [...props.users, { userData, todo: [] }];
         localStorage.setItem("users", JSON.stringify(newUsers));
         authCtx.onlogedIn(true);
         authCtx.onEditUser(userData);
+        localStorage.setItem("ActiveUser", JSON.stringify(userData));
       }
     } else {
       setIsValid({
