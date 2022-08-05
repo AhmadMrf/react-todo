@@ -1,4 +1,6 @@
 .add-todo-wrapper {
+  position: relative;
+  inset: 0 0 0 0;
   display: flex;
   flex-direction: column;
   align-items: center;
