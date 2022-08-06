@@ -29,7 +29,10 @@ const AddTodo = (props) => {
   const addNewTodo = () => {};
   const cancelAddTodo = () => {};
   return (
-    <section style={{ "--main-color": props.color, position: "absolute", inset: 0, background: "#fff" }}>
+    <section
+      className={styles.container}
+      style={{ "--main-color": props.color }}
+    >
       <HeaderApp className="font">
         <AddTodoHeader onGetTodoColor={getTodoColor} />
       </HeaderApp>
@@ -52,11 +55,9 @@ const AddTodo = (props) => {
         </div>
         <div className={styles["new-todo-buttons"]}>
           <button onClick={addNewTodo} className={commonStyles.button}>
-            {" "}
             add new todo
           </button>
-          <button onClick={cancelAddTodo} className={commonStyles.button}>
-            {" "}
+          <button onClick={props.onCancel} className={commonStyles.button}>
             cancel
           </button>
         </div>
