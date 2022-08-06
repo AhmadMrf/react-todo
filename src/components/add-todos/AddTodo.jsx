@@ -18,21 +18,29 @@ const AddTodo = (props) => {
       return true;
     }
   };
+  let todoColor = "#979af2";
 
+  const addTodoData = () => {
+    const newTodoData = {
+      id: Math.random(),
+      title: todoTitle,
+      content: newTodoContent.current.value,
+      modifyDate: new Date(),
+      completed: false,
+      color: todoColor,
+    };
+    props.onAddTodo(newTodoData);
+  };
   const newTodoTitle = (todoTitleInput) => {
     validation(todoTitleInput);
     setTodoTitle(todoTitleInput);
   };
   const getTodoColor = (todoColor) => {
-    console.log(todoColor);
+    todoColor = todoColor;
   };
-  const addNewTodo = () => {};
-  const cancelAddTodo = () => {};
+
   return (
-    <section
-      className={styles.container}
-      style={{ "--main-color": props.color }}
-    >
+    <section className={styles.container} style={{ "--main-color": props.color }}>
       <HeaderApp className="font">
         <AddTodoHeader onGetTodoColor={getTodoColor} />
       </HeaderApp>
@@ -54,7 +62,7 @@ const AddTodo = (props) => {
           <textarea id="todoContent" ref={newTodoContent}></textarea>
         </div>
         <div className={styles["new-todo-buttons"]}>
-          <button onClick={addNewTodo} className={commonStyles.button}>
+          <button onClick={addTodoData} className={commonStyles.button}>
             add new todo
           </button>
           <button onClick={props.onCancel} className={commonStyles.button}>
