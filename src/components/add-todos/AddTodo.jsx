@@ -7,8 +7,8 @@ import styles from "./addTodo.module.css";
 import commonStyles from "../ui/commonUi.module.css";
 const AddTodo = (props) => {
   return (
-    <section>
-      <HeaderApp style={{ "--main-color": props.color }} className="font">
+    <section style={{ "--main-color": props.color }}>
+      <HeaderApp className="font">
         <AddTodoHeader />
       </HeaderApp>
       <div className={styles["add-todo-wrapper"]}>
