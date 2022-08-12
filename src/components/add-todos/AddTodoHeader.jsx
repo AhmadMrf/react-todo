@@ -8,7 +8,7 @@ const addTodoHeader = (props) => {
   return (
     <div className={styles["add-todo-header-contaner"]}>
       <h3>add new todo</h3>
-      <ColorTag onChangeHandler={ChangeHandler} className={styles["add-todo-header-color"]} id="todoColor" value="#3b9ade" label="todo color" />
+      <ColorTag onChangeHandler={ChangeHandler} className={styles["add-todo-header-color"]} id="todoColor" value="#6d72fd" label="todo color" />
     </div>
   );
 };
