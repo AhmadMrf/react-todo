@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./colorTag.module.css";
 
 const ColorTag = (props) => {
-  const [color, setColor] = useState("#29f5fb");
+  const [color, setColor] = useState(props.value);
   const colorInputHandler = (e) => {
     setColor(e.target.value);
     props.onChangeHandler(e.target.value);
