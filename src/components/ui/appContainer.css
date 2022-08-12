@@ -1,6 +1,7 @@
 .app-wrapper {
   margin: 10vh auto;
-  min-height: 50vh;
+  /* min-height: 50vh; */
+  max-height: 80vh;
   width: min(750px, 80vw);
   min-width: 300px;
   font-family: "Roboto", sans-serif;

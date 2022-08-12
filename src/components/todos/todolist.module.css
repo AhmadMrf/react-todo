@@ -1,5 +1,7 @@
 .todoslist {
   position: relative;
+  max-height: 60vh;
+  overflow-y: auto;
 }
 .no-todo {
   padding: 1rem;
