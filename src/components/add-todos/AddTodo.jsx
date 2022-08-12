@@ -9,6 +9,7 @@ import commonStyles from "../ui/commonUi.module.css";
 const AddTodo = (props) => {
   const newTodoContent = useRef();
   const [todoTitle, setTodoTitle] = useState("");
+  const [todoColor, setTodoColor] = useState("#6d72fd");
   const [isValid, setIsValid] = useState({ isValid: " ", errorMsg: "" });
   const validation = (userInput) => {
     if (userInput.length < 4 || userInput.length > 20) {
@@ -18,9 +19,12 @@ const AddTodo = (props) => {
       return true;
     }
   };
-  let todoColor = "#979af2";
 
   const addTodoData = () => {
+    if (!isValid.isValid) {
+      setIsValid((prevIsValid) => ({ isValid: false, errorMsg: "enter more than 4 charecter" }));
+      return;
+    }
     const newTodoData = {
       id: Math.random(),
       title: todoTitle,
@@ -36,7 +40,7 @@ const AddTodo = (props) => {
     setTodoTitle(todoTitleInput);
   };
   const getTodoColor = (todoColor) => {
-    todoColor = todoColor;
+    setTodoColor(todoColor);
   };
 
   return (
@@ -55,6 +59,7 @@ const AddTodo = (props) => {
             type="text"
             id="newTodo"
             label="title"
+            errorMsg={isValid.errorMsg}
           />
         </div>
         <div className={styles["new-todo-content"]}>
@@ -63,7 +68,7 @@ const AddTodo = (props) => {
         </div>
         <div className={styles["new-todo-buttons"]}>
           <button onClick={addTodoData} className={commonStyles.button}>
-            add new todo
+            add todo
           </button>
           <button onClick={props.onCancel} className={commonStyles.button}>
             cancel
