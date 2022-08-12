@@ -8,7 +8,7 @@ import TodosWrapper from "../todos/TodosWrapper";
 import authContext from "../../context/authContext";
 
 const GetInfo = (props) => {
-  const [userData, setUserData] = useState({ userName: "", color: "#29f5fb" });
+  const [userInfo, setUserInfo] = useState({ userName: "", color: "#29f5fb" });
   const [isValid, setIsValid] = useState({ isValid: " ", errorMsg: "" });
   const authCtx = useContext(authContext);
   const validation = (userInput) => {
@@ -22,46 +22,38 @@ const GetInfo = (props) => {
 
   const ChangeTextInput = (userNameInput) => {
     validation(userNameInput);
-    setUserData((prev) => {
+    setUserInfo((prev) => {
       return { ...prev, userName: userNameInput };
     });
   };
   const ChangeColorInput = (themeColorInput) => {
-    setUserData((prev) => {
+    setUserInfo((prev) => {
       return { ...prev, color: themeColorInput };
     });
   };
   const clickHandler = () => {
-    if (validation(userData.userName)) {
-      let existedUser = props.users.find(
-        (user) =>
-          userData.userName.toLowerCase() ===
-          user.userData.userName.toLowerCase()
-      );
+    if (validation(userInfo.userName)) {
+      let existedUser = props.users.find((user) => userInfo.userName.toLowerCase() === user.userInfo.userName.toLowerCase());
       if (existedUser) {
-        authCtx.onlogedIn(true);
-        authCtx.onEditUser(existedUser.userData);
-        localStorage.setItem(
-          "ActiveUser",
-          JSON.stringify(existedUser.userData)
-        );
+        authCtx.onlogedIn(true, existedUser);
+        localStorage.setItem("ActiveUser", JSON.stringify(existedUser.userInfo));
       } else {
-        const newUsers = [...props.users, { userData, todo: [] }];
+        const newUser = { id: Math.random(), userInfo, userTodo: [] };
+        const newUsers = [...props.users, newUser];
         localStorage.setItem("users", JSON.stringify(newUsers));
-        authCtx.onlogedIn(true);
-        authCtx.onEditUser(userData);
-        localStorage.setItem("ActiveUser", JSON.stringify(userData));
+        authCtx.onlogedIn(true, newUser);
+        localStorage.setItem("ActiveUser", JSON.stringify(userInfo));
       }
     } else {
       setIsValid({
         isValid: false,
-        errorMsg: "user name must be between 4 and 20"
+        errorMsg: "user name must be between 4 and 20",
       });
     }
   };
 
   return authCtx.isLoggedIn ? (
-    <TodosWrapper userInfo={authCtx.userData} />
+    <TodosWrapper />
   ) : (
     <section className={styles["get-info-wrapper"]}>
       <HeaderApp className="font">welcome to todo App</HeaderApp>
@@ -72,14 +64,10 @@ const GetInfo = (props) => {
           type="text"
           id="newUser"
           label="user name"
-          value={userData.userName}
+          value={userInfo.userName}
           errorMsg={isValid.errorMsg}
         />
-        <ColorTag
-          onChangeHandler={ChangeColorInput}
-          id="color"
-          label="choose your favorit color"
-        />
+        <ColorTag onChangeHandler={ChangeColorInput} id="color" label="choose your favorit color" />
       </div>
       <button onClick={clickHandler} className={CommonStyles.button}>
         enter

@@ -5,29 +5,41 @@ import TodosWrapper from "./components/todos/TodosWrapper";
 import authContext from "./context/authContext";
 
 function App() {
+  const userDataHelper = {
+    id: "",
+    userInfo: {
+      userName: "",
+      color: "",
+    },
+    userTodo: [],
+  };
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userData, setUserData] = useState({ userName: "", color: "#29f5fb" });
+  const [userData, setUserData] = useState(userDataHelper);
 
-  const logInHandle = (logState) => {
+  let ActiveUser = JSON.parse(localStorage.getItem("ActiveUser"));
+  const users = JSON.parse(localStorage.getItem("users")) || [];
+
+  const logInHandle = (logState, currentUser) => {
     setIsLoggedIn(logState);
+    setUserData(currentUser);
   };
   const logOutHandle = (logState) => {
     setIsLoggedIn(logState);
   };
-  const editUserHandler = ({ userName, color }) => {
-    setUserData({ userName, color });
+  const editUserHandler = (currentUser) => {
+    const updatedUsers = users.map((user) => {
+      if (user.id === currentUser.id) return currentUser;
+      return user;
+    });
+    localStorage.setItem("users", JSON.stringify(updatedUsers));
+    setUserData(currentUser);
   };
-  let ActiveUser = JSON.parse(localStorage.getItem("ActiveUser"));
-  const users = JSON.parse(localStorage.getItem("users")) || [];
+  // const editTodosHandler = () => {};
 
   useEffect(() => {
     if (ActiveUser) {
-      let existedUser = users.find(
-        (user) =>
-          ActiveUser.userName.toLowerCase() ===
-          user.userData.userName.toLowerCase()
-      );
-      editUserHandler(existedUser.userData);
+      let existedUser = users.find((user) => ActiveUser.userName.toLowerCase() === user.userInfo.userName.toLowerCase());
+      editUserHandler(existedUser);
       setIsLoggedIn(true);
     }
   }, []);
@@ -39,16 +51,9 @@ function App() {
         userData,
         onlogedIn: logInHandle,
         onLogedOut: logOutHandle,
-        onEditUser: editUserHandler
-      }}
-    >
-      <Container>
-        {isLoggedIn ? (
-          <TodosWrapper userInfo={userData} />
-        ) : (
-          <GetInfo users={users} />
-        )}
-      </Container>
+        onEditUser: editUserHandler,
+      }}>
+      <Container>{isLoggedIn ? <TodosWrapper /> : <GetInfo users={users} />}</Container>
     </authContext.Provider>
   );
 }
