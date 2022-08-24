@@ -1,0 +1,67 @@
+.more-action-wrapper {
+  box-sizing: border-box;
+  position: absolute;
+  right: 1rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  background-color: rgb(223, 223, 223);
+  border-radius: 2rem;
+  overflow: hidden;
+}
+.more-action-wrapper:hover {
+  background-color: rgb(208, 208, 208);
+}
+.more-action-wrapper svg {
+  pointer-events: none;
+}
+.more-action-wrapper button {
+  cursor: pointer;
+  height: 100%;
+  border: none;
+  background-color: inherit;
+  font-size: 1.2rem;
+  -webkit-filter: brightness(100%);
+filter: brightness(100%);
+}
+.more-action-wrapper button:hover {
+  background-color: inherit;
+}
+.more-action {
+  display: flex;
+  padding-top: .3rem;
+  gap: 0.5rem;
+  margin: 0.5rem;
+}
+.more-action-active {
+  width: 5rem;
+}
+.completed-btn:hover {
+  color: green;
+}
+
+.delete-btn:hover {
+  color: red;
+}
+
+.edit-btn:hover {
+  color: orange;
+}
+
+.toggle-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 1.7rem;
+  /* border: 1px solid; */
+  /* border-radius: 50%; */
+  /* height: 100%; */
+  padding:.5rem;
+}
+.toggle-btn:hover {
+  /* color: red; */
+  background-color: initial;
+  color: rgb(80, 80, 80);
+}

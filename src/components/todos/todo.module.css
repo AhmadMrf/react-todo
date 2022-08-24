@@ -7,6 +7,10 @@
   transition: all ease 0.3s;
   background-color: #fff;
 }
+.todo-wrapper.completed > * {
+  color: #c2c2c2 !important;
+  text-decoration: line-through;
+}
 .todo-wrapper:last-child {
   border: none;
 }
@@ -32,6 +36,7 @@
 }
 .todo-header {
   display: flex;
+  align-items: center;
   justify-content: space-between;
 }
 
@@ -42,7 +47,6 @@
 
 .todo-title {
   text-transform: capitalize;
-  color: #1d1d1d;
   font-size: 1.1rem;
 }
 
