@@ -22,7 +22,7 @@ const AddTodo = (props) => {
 
   const addTodoData = () => {
     if (!isValid.isValid) {
-      setIsValid((prevIsValid) => ({ isValid: false, errorMsg: "enter more than 4 charecter" }));
+      setIsValid((prevIsValid) => ({ isValid: false, errorMsg: "enter between 4 & 20 charecter" }));
       return;
     }
     const newTodoData = {
