@@ -1,0 +1,43 @@
+.container {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  min-height: 60vh;
+}
+.add-todo-wrapper {
+  position: relative;
+  inset: 0 0 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 2rem;
+  gap: 2rem;
+}
+.add-todo-wrapper > div {
+  width: min(80%, 500px);
+}
+.input input {
+  width: 100%;
+}
+.new-todo-content {
+  display: flex;
+  gap: calc(1.5vw + 5px);
+}
+.new-todo-content textarea {
+  padding: 0.5rem;
+  width: 100%;
+  resize: vertical;
+  outline: none;
+  border: 1px solid #b6b6b6;
+}
+.new-todo-content textarea:focus {
+  border-color: #1c1c1c;
+}
+.new-todo-content label {
+  text-transform: capitalize;
+}
+.new-todo-buttons {
+  display: flex;
+  justify-content: center;
+  gap: min(3rem, 5vw);
+}

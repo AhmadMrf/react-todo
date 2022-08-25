@@ -6,35 +6,38 @@ import TodosList from "./TodosList";
 import { IconContext } from "react-icons";
 import { FiEdit, FiExternalLink, FiPlusCircle } from "react-icons/fi";
 import authContext from "../../context/authContext";
-import AddTodo from "../add-todos/AddTodo";
+import todoFormCtx from "../../context/todo-form-ctx";
+import TodoForm from "../add-todos/TodoForm";
 
 const TodosWrapper = () => {
   const { userData, onEditUser, onLogedOut } = useContext(authContext);
   const { id, userInfo, userTodo } = userData;
-  const [showAddTodoForm, setShowAddTodoForm] = useState(false);
+  const [isOpenTodoForm, setIsOpenTodoForm] = useState(false);
+  // const [showEditTodoForm, setShowEditTodoForm] = useState(false);
   // const [todos, setTodos] = useState({});
   // useEffect(() => {
   //   const userTodos = localStorage.getItem;
   // }, []);
 
-  const cancelNewTodo = () => {
-    setShowAddTodoForm(false);
+  const cancelTodoForm = () => {
+    setIsOpenTodoForm(false);
+    // setShowEditTodoForm(false);
   };
-  const addNewTodo = (newTodoData) => {
+  const submitTodoForm = (newTodoData) => {
     const newTodos = {
       id,
       userInfo,
       userTodo: [...userTodo, newTodoData],
     };
     onEditUser(newTodos);
-    setShowAddTodoForm(false);
+    setIsOpenTodoForm(false);
   };
   const logOutHandler = () => {
     localStorage.removeItem("ActiveUser");
     onLogedOut(false);
   };
   const showNewTodoForm = () => {
-    setShowAddTodoForm(true);
+    setIsOpenTodoForm(true);
   };
   const editUserData = () => {
     const Alert = withReactContent(Swal);
@@ -54,19 +57,55 @@ const TodosWrapper = () => {
   const editIconStyles = {
     style: { verticalAlign: "middle", marginLeft: ".5rem", cursor: "pointer" },
   };
+
+  // const initialValue = {
+  //   isOpen: isOpenTodoForm,
+  //   initialInfo: {
+  //     color:null,
+  //     title:null,
+  //     content:null,
+  //     date:null,
+  //     confirmText:null,
+  //   },
+  //   onCancel: cancelTodoForm,
+  //   onSubmit: submitTodoForm,
+  // }
+
+  // const initialInfo = {
+  //   color: userInfo.color,
+  //   title: null,
+  //   content: null,
+  //   date: null,
+  //   isEdited: false,
+  // };
+
+  const initialInfo = {
+    color: "#cdcdcd",
+    title: "no tile",
+    content: "no content",
+    date: "2021-10-10",
+    isEdited: true,
+  };
   return (
-    <section style={{ position: "relative" }}>
-      <IconContext.Provider value={editIconStyles}>
-        <HeaderApp style={{ "--main-color": userInfo.color }} className="font">
-          Hi , {userInfo.userName}
-          <FiEdit title="Edit user" onClick={editUserData} />
-          <FiExternalLink title="Exit" onClick={logOutHandler} />
-          <FiPlusCircle title="add new todo" onClick={showNewTodoForm} />
-        </HeaderApp>
-      </IconContext.Provider>
-      <TodosList todos={userTodo} />
-      {showAddTodoForm && <AddTodo onAddTodo={addNewTodo} onCancel={cancelNewTodo} color={userInfo.color} />}
-    </section>
+    <todoFormCtx.Provider
+      value={{
+        isOpen: isOpenTodoForm,
+        initialInfo,
+      }}>
+      <section style={{ position: "relative" }}>
+        <IconContext.Provider value={editIconStyles}>
+          <HeaderApp style={{ "--main-color": userInfo.color }} className="font">
+            Hi , {userInfo.userName}
+            <FiEdit title="Edit user" onClick={editUserData} />
+            <FiExternalLink title="Exit" onClick={logOutHandler} />
+            <FiPlusCircle title="add new todo" onClick={showNewTodoForm} />
+          </HeaderApp>
+        </IconContext.Provider>
+        <TodosList todos={userTodo} />
+        {/* {isOpenTodoForm && <TodoForm info={initialInfo} />} */}
+        {isOpenTodoForm && <TodoForm onSubmit={submitTodoForm} onCancel={cancelTodoForm} initialInfo={initialInfo} />}
+      </section>
+    </todoFormCtx.Provider>
   );
 };
 
