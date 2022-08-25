@@ -3,6 +3,7 @@
   inset: 0;
   background: #fff;
   min-height: 60vh;
+  z-index: 2;
 }
 .add-todo-wrapper {
   position: relative;

@@ -7,8 +7,12 @@ import styles from "./TodoForm.module.css";
 import commonStyles from "../ui/commonUi.module.css";
 const TodoForm = (props) => {
   const newTodoContent = useRef();
-  const [todoTitle, setTodoTitle] = useState(props.initialInfo.isEdited?props.initialInfo.title:"");
-  const [todoColor, setTodoColor] = useState(props.initialInfo.isEdited?props.initialInfo.color:"#6d72fd");
+  const [todoTitle, setTodoTitle] = useState(
+    props.todoFormInfo.isEdited ? props.todoFormInfo.title : ""
+  );
+  const [todoColor, setTodoColor] = useState(
+    props.todoFormInfo.isEdited ? props.todoFormInfo.color : "#6d72fd"
+  );
   const [isValid, setIsValid] = useState({ isValid: " ", errorMsg: "" });
   const validation = (userInput) => {
     if (userInput.length < 4 || userInput.length > 20) {
@@ -21,16 +25,21 @@ const TodoForm = (props) => {
 
   const confirmTodoData = () => {
     if (!isValid.isValid) {
-      setIsValid((prevIsValid) => ({ isValid: false, errorMsg: "enter between 4 & 20 charecter" }));
+      setIsValid((prevIsValid) => ({
+        isValid: false,
+        errorMsg: "enter between 4 & 20 charecter"
+      }));
       return;
     }
     const newTodoData = {
-      id: Math.random(),
+      id: props.todoFormInfo.isEdited ? props.todoFormInfo.id : Math.random(),
       title: todoTitle,
       content: newTodoContent.current.value,
-      modifyDate: new Date(),
+      modifyDate: props.todoFormInfo.isEdited
+        ? props.todoFormInfo.date
+        : new Date(),
       completed: false,
-      color: todoColor,
+      color: todoColor
     };
     props.onSubmit(newTodoData);
   };
@@ -43,9 +52,15 @@ const TodoForm = (props) => {
   };
 
   return (
-    <section className={styles.container} style={{ "--main-color": props.initialInfo.color }}>
+    <section
+      className={styles.container}
+      style={{ "--main-color": props.todoFormInfo.color }}
+    >
       <HeaderApp className="font">
-        <AddTodoHeader onGetTodoColor={getTodoColor} />
+        <AddTodoHeader
+          title={props.todoFormInfo.isEdited ? "edit todo" : "add new todo"}
+          onGetTodoColor={getTodoColor}
+        />
       </HeaderApp>
       <div className={styles["add-todo-wrapper"]}>
         <div className={styles["new-todo-details"]}>
@@ -63,11 +78,17 @@ const TodoForm = (props) => {
         </div>
         <div className={styles["new-todo-content"]}>
           <label htmlFor="todoContent">content</label>
-          <textarea id="todoContent" defaultValue={props.initialInfo.isEdited?props.initialInfo.content:""} ref={newTodoContent}></textarea>
+          <textarea
+            id="todoContent"
+            defaultValue={
+              props.todoFormInfo.isEdited ? props.todoFormInfo.content : ""
+            }
+            ref={newTodoContent}
+          ></textarea>
         </div>
         <div className={styles["new-todo-buttons"]}>
           <button onClick={confirmTodoData} className={commonStyles.button}>
-            {props.initialInfo.isEdited?"edit todo":"add new todo"}
+            {props.todoFormInfo.isEdited ? "edit todo" : "add new todo"}
           </button>
           <button onClick={props.onCancel} className={commonStyles.button}>
             cancel

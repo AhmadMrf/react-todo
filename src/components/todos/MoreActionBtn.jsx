@@ -6,6 +6,7 @@ import authContext from "../../context/authContext";
 import todoFormCtx from "../../context/todo-form-ctx";
 const MoreActionBtn = ({ todoId, onTodoEditHandler }) => {
   const { onEditUser, userData } = useContext(authContext);
+  const { showTodoForm, todoFormInfoHandle } = useContext(todoFormCtx);
   // console.log(userData);
   const [showMoreAction, setShowMoreAction] = useState(false);
   const moreBtns = useRef(null);
@@ -34,7 +35,7 @@ const MoreActionBtn = ({ todoId, onTodoEditHandler }) => {
     });
     const newUserData = {
       ...userData,
-      userTodo: newTodosStatus,
+      userTodo: newTodosStatus
     };
     onEditUser(newUserData);
     setShowMoreAction(false);
@@ -45,13 +46,14 @@ const MoreActionBtn = ({ todoId, onTodoEditHandler }) => {
     });
     const newUserData = {
       ...userData,
-      userTodo: newTodos,
+      userTodo: newTodos
     };
     onEditUser(newUserData);
     setShowMoreAction(false);
   };
   const editHandler = () => {
-    onTodoEditHandler(todoId)
+    showTodoForm(true);
+    todoFormInfoHandle(todoId);
   };
   return (
     <div ref={moreBtns} className={styles["more-action-wrapper"]}>
