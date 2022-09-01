@@ -74,6 +74,7 @@ const TodoForm = (props) => {
             id="newTodo"
             label="title"
             errorMsg={isValid.errorMsg}
+            autofocus={true}
           />
         </div>
         <div className={styles["new-todo-content"]}>
