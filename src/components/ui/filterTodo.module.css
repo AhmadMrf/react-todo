@@ -1,0 +1,87 @@
+.find_todo {
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+.find_todo input {
+  accent-color: #000000;
+}
+.search {
+  padding: 1rem 0;
+  width: 100%;
+  position: relative;
+}
+.search_reset {
+  position: absolute;
+  left: -0.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #000000;
+}
+.search input {
+  padding: 0.3rem 0.5rem 0.3rem 1.5rem;
+  width: calc(100% - 4.5rem);
+  outline: none;
+  border: none;
+}
+.search input:hover,
+.search input:focus {
+  border: 1px solid #212121;
+}
+
+.search button {
+  color: #464646;
+  position: relative;
+  background-color: #ffffff;
+  border: 1px solid #212121;
+  padding: 0.3rem 0.7rem;
+  width: 4rem;
+}
+.search button:active {
+  background-color: #464646;
+}
+.search button:hover {
+  cursor: pointer;
+  color: #212121;
+  background-color: #ffffff;
+}
+.filter_wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+.completed {
+  display: flex;
+  gap: 0.5rem;
+  flex-direction: column;
+  padding-right: 1rem;
+}
+.completed label span {
+  white-space: nowrap;
+}
+.completed label {
+  display: flex;
+  justify-content: space-between;
+  max-width: 8rem;
+  gap: 1rem;
+}
+.date {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding-right: 1rem;
+}
+.date label {
+  display: inline-flex;
+  gap: 0.2rem;
+}
+.date label:first-child {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1 1 100%;
+}
+
+@media only screen and (min-width: 450px) {
+  .search {
+    width: 70%;
+  }
+}
