@@ -4,10 +4,9 @@ import { BsTrash, BsThreeDots } from "react-icons/bs";
 import styles from "./MoreActionBtn.module.css";
 import authContext from "../../context/authContext";
 import todoFormCtx from "../../context/todo-form-ctx";
-const MoreActionBtn = ({ todoId, onTodoEditHandler }) => {
+const MoreActionBtn = ({ todoId, isCompleted }) => {
   const { onEditUser, userData } = useContext(authContext);
   const { showTodoForm, todoFormInfoHandle } = useContext(todoFormCtx);
-  // console.log(userData);
   const [showMoreAction, setShowMoreAction] = useState(false);
   const moreBtns = useRef(null);
   const { current } = moreBtns;
@@ -59,9 +58,9 @@ const MoreActionBtn = ({ todoId, onTodoEditHandler }) => {
     <div ref={moreBtns} className={styles["more-action-wrapper"]}>
       {showMoreAction && (
         <div className={`${styles["more-action"]}`}>
-          <button onClick={completHandler} className={styles["completed-btn"]}>
+          {!isCompleted && <button onClick={completHandler} className={styles["completed-btn"]}>
             <MdDone />
-          </button>
+          </button>}
           <button onClick={deleteHandler} className={styles["delete-btn"]}>
             <BsTrash />
           </button>

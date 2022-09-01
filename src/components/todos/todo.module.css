@@ -31,6 +31,16 @@
   top: 0;
   transition: all ease 0.2s;
 }
+.todo-wrapper.completed:after {
+  content: "";
+  height: 100%;
+  width: 5px;
+  background-color: green;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: all ease 0.2s;
+}
 .todo-wrapper:hover:before {
   width: 5px;
 }

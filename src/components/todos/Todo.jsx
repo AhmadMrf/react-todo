@@ -13,7 +13,7 @@ const Todo = ({ todo }) => {
           <TodoDate date={todo["modifyDate"]} />
           <span className={styles["todo-title"]}>{todo.title}</span>
         </div>
-        <MoreActionBtn todoId={todo.id} />
+        <MoreActionBtn isCompleted={todo.completed} todoId={todo.id} />
         {/* <button className={styles["todo-more-action"]}></button> */}
       </div>
       <div className={styles["todo-content"]}>{todo.content}</div>
