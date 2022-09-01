@@ -1,7 +1,6 @@
 .get-info-title {
   background: var(--main-color);
-  padding: 2rem 0;
-  padding-left: 3rem;
+  padding: 2rem 0 .5rem 3rem;
   border-radius: 5px 5px 0 0;
   text-transform: capitalize;
 }

@@ -6,7 +6,7 @@ const addTodoHeader = (props) => {
     props.onGetTodoColor(todoColor);
   };
   return (
-    <div className={styles["add-todo-header-contaner"]}>
+    <div className={styles["add-todo-header-container"]}>
       <h3>{props.title}</h3>
       <ColorTag
         onChangeHandler={ChangeHandler}
