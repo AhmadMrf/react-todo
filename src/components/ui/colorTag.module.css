@@ -23,14 +23,4 @@
 }
 .get-color input {
   display: none;
-  /* border: none;
-  outline: none;
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 50%;
-  overflow: hidden;
-  cursor: pointer; */
 }
-/* .get-color input::-moz-color-swatch {
-  border: none;
-} */

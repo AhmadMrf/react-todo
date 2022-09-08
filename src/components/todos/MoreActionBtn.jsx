@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useContext } from "react";
 import { MdDone, MdOutlineModeEdit, MdOutlineCancel } from "react-icons/md";
 import { BsTrash, BsThreeDots } from "react-icons/bs";
 import styles from "./MoreActionBtn.module.css";
-import authContext from "../../context/authContext";
+import authContext from "../../context/auth-context";
 import todoFormCtx from "../../context/todo-form-ctx";
 const MoreActionBtn = ({ todoId, isCompleted }) => {
   const { onEditUser, userData } = useContext(authContext);
@@ -34,7 +34,7 @@ const MoreActionBtn = ({ todoId, isCompleted }) => {
     });
     const newUserData = {
       ...userData,
-      userTodo: newTodosStatus
+      userTodo: newTodosStatus,
     };
     onEditUser(newUserData);
     setShowMoreAction(false);
@@ -45,7 +45,7 @@ const MoreActionBtn = ({ todoId, isCompleted }) => {
     });
     const newUserData = {
       ...userData,
-      userTodo: newTodos
+      userTodo: newTodos,
     };
     onEditUser(newUserData);
     setShowMoreAction(false);
@@ -58,9 +58,11 @@ const MoreActionBtn = ({ todoId, isCompleted }) => {
     <div ref={moreBtns} className={styles["more-action-wrapper"]}>
       {showMoreAction && (
         <div className={`${styles["more-action"]}`}>
-          {!isCompleted && <button onClick={completHandler} className={styles["completed-btn"]}>
-            <MdDone />
-          </button>}
+          {!isCompleted && (
+            <button onClick={completHandler} className={styles["completed-btn"]}>
+              <MdDone />
+            </button>
+          )}
           <button onClick={deleteHandler} className={styles["delete-btn"]}>
             <BsTrash />
           </button>

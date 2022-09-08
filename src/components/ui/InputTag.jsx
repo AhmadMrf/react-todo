@@ -13,7 +13,7 @@ const InputTag = (props) => {
         id={props.id}
         value={props.value}
         className={props.error ? styles["input-error"] : ""}
-        autoFocus = {true}
+        autoFocus={true}
       />
     </div>
   );

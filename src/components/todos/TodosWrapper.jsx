@@ -5,10 +5,10 @@ import HeaderApp from "../ui/HeaderApp";
 import TodosList from "./TodosList";
 import { IconContext } from "react-icons";
 import { FiEdit, FiExternalLink, FiPlusCircle } from "react-icons/fi";
-import authContext from "../../context/authContext";
+import authContext from "../../context/auth-context";
 import todoFormCtx from "../../context/todo-form-ctx";
 import TodoForm from "../add-todos/TodoForm";
-import FilterTodo from "../ui/FilterTodo";
+import FilterTodo from "../todos/FilterTodo";
 
 let filter = {
   completedFilter: "all",
@@ -30,13 +30,10 @@ const TodosWrapper = () => {
     let completedFilters = [];
     if (filters.completedFilter === "completed") {
       completedFilters = copyTodos.filter((todo) => todo.completed);
-      console.log("done");
     } else if (filters.completedFilter === "notCompleted") {
       completedFilters = copyTodos.filter((todo) => !todo.completed);
-      console.log("notdone");
     } else {
       completedFilters = [...userTodo];
-      console.log("all");
     }
 
     let dateFilter = [];
@@ -44,27 +41,22 @@ const TodosWrapper = () => {
       dateFilter = completedFilters.filter((todo) => {
         return new Date(todo.modifyDate).getTime() < new Date(filters.dateFilter).getTime();
       });
-      console.log("bef");
     } else if (filters.dateFilter && filters.isBeforeDate === "after") {
       dateFilter = completedFilters.filter((todo) => {
         return new Date(todo.modifyDate).getTime() > new Date(filters.dateFilter).getTime();
       });
-      console.log("aft");
     } else {
       dateFilter = [...completedFilters];
     }
 
     let searchFilter = [];
     if (filters.searchText) {
-      console.log("se");
       searchFilter = dateFilter.filter((todo) => {
         return todo.title.includes(filters.searchText.trim()) || todo.content.includes(filters.searchText.trim());
       });
     } else {
-      console.log("no se");
       searchFilter = [...dateFilter];
     }
-    console.log(searchFilter);
     setTodos([...searchFilter]);
   };
 

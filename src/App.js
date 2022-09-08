@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Container from "./components/ui/Container";
 import GetInfo from "./components/get-info/GetInfo";
 import TodosWrapper from "./components/todos/TodosWrapper";
-import authContext from "./context/authContext";
+import authContext from "./context/auth-context";
 
 function App() {
   const userDataHelper = {
@@ -34,7 +34,6 @@ function App() {
     localStorage.setItem("users", JSON.stringify(updatedUsers));
     setUserData(currentUser);
   };
-  // const editTodosHandler = () => {};
 
   useEffect(() => {
     if (ActiveUser) {

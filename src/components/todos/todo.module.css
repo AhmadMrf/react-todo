@@ -15,7 +15,6 @@
   border: none;
 }
 .todo-wrapper:hover {
-  /* transform: scale(1.05); */
   border-radius: 3px;
   z-index: 1;
   border: none;

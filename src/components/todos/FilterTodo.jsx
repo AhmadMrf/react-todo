@@ -10,7 +10,6 @@ const FilterTodo = (props) => {
   const searchInput = useRef();
 
   const { resetFilters } = props;
-  console.log(resetFilters);
   let filter = {
     completedFilter: completedIsChecked,
     dateFilter: dateInput,

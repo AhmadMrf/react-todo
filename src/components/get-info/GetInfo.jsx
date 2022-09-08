@@ -5,7 +5,7 @@ import styles from "./getInfo.module.css";
 import CommonStyles from "../ui/commonUi.module.css";
 import ColorTag from "../ui/ColorTag";
 import TodosWrapper from "../todos/TodosWrapper";
-import authContext from "../../context/authContext";
+import authContext from "../../context/auth-context";
 
 const GetInfo = (props) => {
   const [userInfo, setUserInfo] = useState({ userName: "", color: "#29f5fb" });
