@@ -2,6 +2,7 @@
   "name": "todo",
   "version": "1.0.0",
   "description": "",
+  "homepage": "https://AhmadMrf.github.io/react-todo",
   "keywords": [],
   "main": "src/index.js",
   "dependencies": {
@@ -13,11 +14,14 @@
     "sweetalert2-react-content": "5.0.2"
   },
   "devDependencies": {
-    "@babel/runtime": "7.13.8"
+    "@babel/runtime": "7.13.8",
+    "gh-pages": "^4.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
