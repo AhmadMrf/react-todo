@@ -10,17 +10,69 @@ import todoFormCtx from "../../context/todo-form-ctx";
 import TodoForm from "../add-todos/TodoForm";
 import FilterTodo from "../ui/FilterTodo";
 
+let filter = {
+  completedFilter: "all",
+  dateFilter: "",
+  isBeforeDate: "before",
+  searchText: "",
+};
 const TodosWrapper = () => {
   const { userData, onEditUser, onLogedOut } = useContext(authContext);
   const { id, userInfo, userTodo } = userData;
   const [todos, setTodos] = useState([]);
   const [isOpenTodoForm, setIsOpenTodoForm] = useState(false);
+  const [doResetFilters, setDoResetFilters] = useState(false);
+  const [filters, setFilters] = useState(filter);
+
+  const filterTodos = (filters) => {
+    setDoResetFilters(false);
+    let copyTodos = [...userTodo];
+    let completedFilters = [];
+    if (filters.completedFilter === "completed") {
+      completedFilters = copyTodos.filter((todo) => todo.completed);
+      console.log("done");
+    } else if (filters.completedFilter === "notCompleted") {
+      completedFilters = copyTodos.filter((todo) => !todo.completed);
+      console.log("notdone");
+    } else {
+      completedFilters = [...userTodo];
+      console.log("all");
+    }
+
+    let dateFilter = [];
+    if (filters.dateFilter && filters.isBeforeDate === "before") {
+      dateFilter = completedFilters.filter((todo) => {
+        return new Date(todo.modifyDate).getTime() < new Date(filters.dateFilter).getTime();
+      });
+      console.log("bef");
+    } else if (filters.dateFilter && filters.isBeforeDate === "after") {
+      dateFilter = completedFilters.filter((todo) => {
+        return new Date(todo.modifyDate).getTime() > new Date(filters.dateFilter).getTime();
+      });
+      console.log("aft");
+    } else {
+      dateFilter = [...completedFilters];
+    }
+
+    let searchFilter = [];
+    if (filters.searchText) {
+      console.log("se");
+      searchFilter = dateFilter.filter((todo) => {
+        return todo.title.includes(filters.searchText.trim()) || todo.content.includes(filters.searchText.trim());
+      });
+    } else {
+      console.log("no se");
+      searchFilter = [...dateFilter];
+    }
+    console.log(searchFilter);
+    setTodos([...searchFilter]);
+  };
+
   useEffect(() => {
     setTodos([...userTodo]);
-    console.log("done");
+    filterTodos(filters);
   }, [userTodo]);
-  // console.log(userTodo);
-  // console.log(userTodo);
+
   const initialInfo = {
     id: null,
     color: userInfo.color,
@@ -38,12 +90,10 @@ const TodosWrapper = () => {
   const submitTodoForm = (newTodoData) => {
     let newTodos = {};
     if (todoFormInfo.isEdited) {
-      console.log(newTodoData);
-      const editedTodos = todos.map((todo) => {
+      const editedTodos = userTodo.map((todo) => {
         if (newTodoData.id === todo.id) return newTodoData;
         return todo;
       });
-      console.log(editedTodos);
 
       newTodos = {
         id,
@@ -54,8 +104,10 @@ const TodosWrapper = () => {
       newTodos = {
         id,
         userInfo,
-        userTodo: [...todos, newTodoData],
+        userTodo: [...userTodo, newTodoData],
       };
+      setDoResetFilters(true);
+      setFilters(filter);
     }
     onEditUser(newTodos);
     setIsOpenTodoForm(false);
@@ -99,61 +151,6 @@ const TodosWrapper = () => {
   const editIconStyles = {
     style: { verticalAlign: "middle", marginLeft: ".5rem", cursor: "pointer" },
   };
-  //color: "#d5a64f"
-
-  // completed: false
-  // ​
-  // content: "kjshd sdfkjhs lksdflsdh"
-  // ​
-  // id: 0.188384670074216
-  // ​
-  // modifyDate: "2022-09-01T07:00:27.556Z"
-  // ​
-  // title: "kajhd ahs"
-
-  const filterTodos = (filters) => {
-    console.log(filters);
-    let copyTodos = [...userTodo];
-    let completedFilters = [];
-    if (filters.completedFilter === "completed") {
-      completedFilters = copyTodos.filter((todo) => todo.completed);
-      console.log("done");
-    } else if (filters.completedFilter === "notCompleted") {
-      completedFilters = copyTodos.filter((todo) => !todo.completed);
-      console.log("notdone");
-    } else {
-      completedFilters = [...userTodo];
-      console.log("all");
-    }
-
-    let dateFilter = [];
-    if (filters.dateFilter && filters.isBeforeDate === "before") {
-      dateFilter = completedFilters.filter((todo) => {
-        return new Date(todo.modifyDate).getTime() < new Date(filters.dateFilter).getTime();
-      });
-      console.log("bef");
-    } else if (filters.dateFilter && filters.isBeforeDate === "after") {
-      dateFilter = completedFilters.filter((todo) => {
-        return new Date(todo.modifyDate).getTime() > new Date(filters.dateFilter).getTime();
-      });
-      console.log("aft");
-    } else {
-      dateFilter = [...completedFilters];
-    }
-
-    let searchFilter = [];
-    if (filters.searchText) {
-      console.log("se");
-      searchFilter = dateFilter.filter((todo) => {
-        return todo.title.includes(filters.searchText.trim()) || todo.content.includes(filters.searchText.trim());
-      });
-    } else {
-      console.log("no se");
-      searchFilter = [...dateFilter];
-    }
-    console.log(searchFilter);
-    setTodos([...searchFilter]);
-  };
 
   return (
     <todoFormCtx.Provider
@@ -164,12 +161,17 @@ const TodosWrapper = () => {
       <section style={{ position: "relative" }}>
         <IconContext.Provider value={editIconStyles}>
           <HeaderApp style={{ "--main-color": userInfo.color }} className="font">
-             Hi , {userInfo.userName}
-
+            Hi , {userInfo.userName}
             <FiEdit title="Edit user" onClick={editUserData} />
             <FiExternalLink title="Exit" onClick={logOutHandler} />
             <FiPlusCircle title="add new todo" onClick={() => showTodoForm(false)} />
-            <FilterTodo onFilter={filterTodos} />
+            <FilterTodo
+              resetFilters={doResetFilters}
+              onFilter={(filters) => {
+                setFilters({ ...filters });
+                filterTodos(filters);
+              }}
+            />
           </HeaderApp>
         </IconContext.Provider>
         <TodosList todos={todos} />

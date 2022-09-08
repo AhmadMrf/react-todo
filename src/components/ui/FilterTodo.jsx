@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import styles from "./filterTodo.module.css";
 import { MdOutlineCancel } from "react-icons/md";
 
@@ -8,13 +8,24 @@ const FilterTodo = (props) => {
   const [textInput, setTextInput] = useState("");
   const [dateInput, setDateInput] = useState("");
   const searchInput = useRef();
-  const filter = {
+
+  const { resetFilters } = props;
+  console.log(resetFilters);
+  let filter = {
     completedFilter: completedIsChecked,
     dateFilter: dateInput,
     isBeforeDate: dateRadio,
     searchText: textInput,
   };
-
+  useEffect(() => {
+    if (resetFilters)
+      filter = {
+        completedFilter: setCompletedIsChecked("all"),
+        dateFilter: setDateInput(""),
+        isBeforeDate: setDateRadio("before"),
+        searchText: setTextInput(""),
+      };
+  }, [resetFilters]);
   const radioInputHandler = (e) => {
     switch (e.target.name) {
       case "date":
