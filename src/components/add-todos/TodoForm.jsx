@@ -5,6 +5,9 @@ import InputTag from "../ui/InputTag";
 import AddTodoHeader from "./AddTodoHeader";
 import styles from "./TodoForm.module.css";
 import commonStyles from "../ui/commonUi.module.css";
+import ReactDOM from "react-dom";
+import Container from "../ui/Container";
+const modal = document.getElementById("modal");
 const TodoForm = (props) => {
   const newTodoContent = useRef();
   const [todoTitle, setTodoTitle] = useState(props.todoFormInfo.isEdited ? props.todoFormInfo.title : "");
@@ -13,6 +16,7 @@ const TodoForm = (props) => {
   const validation = (userInput) => {
     if (userInput.length < 4 || userInput.length > 20) {
       setIsValid({ isValid: false, errorMsg: "" });
+      return false;
     } else {
       setIsValid({ isValid: true, errorMsg: "" });
       return true;
@@ -20,7 +24,7 @@ const TodoForm = (props) => {
   };
 
   const confirmTodoData = () => {
-    if (!isValid.isValid) {
+    if (!validation(todoTitle)) {
       setIsValid((prevIsValid) => ({
         isValid: false,
         errorMsg: "enter between 4 & 20 charecter",
@@ -45,40 +49,56 @@ const TodoForm = (props) => {
     setTodoColor(todoColor);
   };
 
+  const closeModal = (e) => {
+    if (e.target.classList.contains(styles.container)) props.onCancel();
+  };
   return (
-    <section className={styles.container} style={{ "--main-color": props.todoFormInfo.color }}>
-      <HeaderApp className="font">
-        <AddTodoHeader title={props.todoFormInfo.isEdited ? "edit todo" : "add new todo"} onGetTodoColor={getTodoColor} />
-      </HeaderApp>
-      <div className={styles["add-todo-wrapper"]}>
-        <div className={styles["new-todo-details"]}>
-          <TodoDate />
-          <InputTag
-            error={!isValid.isValid}
-            onChangeHandler={newTodoTitle}
-            value={todoTitle}
-            className={styles["input"]}
-            type="text"
-            id="newTodo"
-            label="title"
-            errorMsg={isValid.errorMsg}
-            autofocus={true}
-          />
-        </div>
-        <div className={styles["new-todo-content"]}>
-          <label htmlFor="todoContent">content</label>
-          <textarea id="todoContent" defaultValue={props.todoFormInfo.isEdited ? props.todoFormInfo.content : ""} ref={newTodoContent}></textarea>
-        </div>
-        <div className={styles["new-todo-buttons"]}>
-          <button onClick={confirmTodoData} className={commonStyles.button}>
-            {props.todoFormInfo.isEdited ? "edit todo" : "add new todo"}
-          </button>
-          <button onClick={props.onCancel} className={commonStyles.button}>
-            cancel
-          </button>
-        </div>
-      </div>
-    </section>
+    <>
+      {ReactDOM.createPortal(
+        <div onClick={closeModal} className={styles.container}>
+          <Container style={{ "--main-color": props.todoFormInfo.color }}>
+            <HeaderApp className='font'>
+              <AddTodoHeader
+                title={props.todoFormInfo.isEdited ? "edit todo" : "add new todo"}
+                onGetTodoColor={getTodoColor}
+              />
+            </HeaderApp>
+            <div className={styles["add-todo-wrapper"]}>
+              <div className={styles["new-todo-details"]}>
+                <TodoDate />
+                <InputTag
+                  error={!isValid.isValid}
+                  onChangeHandler={newTodoTitle}
+                  value={todoTitle}
+                  className={styles["input"]}
+                  type='text'
+                  id='newTodo'
+                  label='title'
+                  errorMsg={isValid.errorMsg}
+                  autofocus={true}
+                />
+              </div>
+              <div className={styles["new-todo-content"]}>
+                <label htmlFor='todoContent'>content</label>
+                <textarea
+                  id='todoContent'
+                  defaultValue={props.todoFormInfo.isEdited ? props.todoFormInfo.content : ""}
+                  ref={newTodoContent}></textarea>
+              </div>
+              <div className={styles["new-todo-buttons"]}>
+                <button onClick={confirmTodoData} className={commonStyles.button}>
+                  {props.todoFormInfo.isEdited ? "edit todo" : "add new todo"}
+                </button>
+                <button onClick={props.onCancel} className={commonStyles.button}>
+                  cancel
+                </button>
+              </div>
+            </div>
+          </Container>
+        </div>,
+        modal
+      )}
+    </>
   );
 };
 
