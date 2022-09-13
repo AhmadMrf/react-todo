@@ -1,5 +1,5 @@
 import React from "react";
-import "./appContainer.css";
+import "./container.css";
 const Container = (props) => {
   return <main className="app-wrapper">{props.children}</main>;
 };
