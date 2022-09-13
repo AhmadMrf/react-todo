@@ -1,6 +1,4 @@
 import React, { useContext, useState, useEffect } from "react";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
 import HeaderApp from "../ui/HeaderApp";
 import TodosList from "./TodosList";
 import { IconContext } from "react-icons";
@@ -9,7 +7,7 @@ import authContext from "../../context/auth-context";
 import todoFormCtx from "../../context/todo-form-ctx";
 import TodoForm from "../add-todos/TodoForm";
 import FilterTodo from "../todos/FilterTodo";
-
+import EditUser from "./EditUser";
 let filter = {
   completedFilter: "all",
   dateFilter: "",
@@ -20,6 +18,7 @@ const TodosWrapper = () => {
   const { userData, onEditUser, onLogedOut } = useContext(authContext);
   const { id, userInfo, userTodo } = userData;
   const [todos, setTodos] = useState([]);
+  const [isEditing, setIsEditing] = useState(false);
   const [isOpenTodoForm, setIsOpenTodoForm] = useState(false);
   const [doResetFilters, setDoResetFilters] = useState(false);
   const [filters, setFilters] = useState(filter);
@@ -126,18 +125,7 @@ const TodosWrapper = () => {
     setTodoFormInfo(newFormInfo);
   };
   const editUserData = () => {
-    const Alert = withReactContent(Swal);
-
-    Alert.fire({
-      position: "center",
-      titleText: "Edit , Will Be Added Later",
-      padding: "1rem",
-      width: "auto",
-      icon: "info",
-      timer: 2500,
-      showConfirmButton: false,
-      iconColor: userInfo.color,
-    });
+    setIsEditing(true);
   };
 
   const editIconStyles = {
@@ -152,11 +140,23 @@ const TodosWrapper = () => {
       }}>
       <section style={{ position: "relative" }}>
         <IconContext.Provider value={editIconStyles}>
-          <HeaderApp style={{ "--main-color": userInfo.color }} className="font">
-            Hi , {userInfo.userName}
-            <FiEdit title="Edit user" onClick={editUserData} />
-            <FiExternalLink title="Exit" onClick={logOutHandler} />
-            <FiPlusCircle title="add new todo" onClick={() => showTodoForm(false)} />
+          <HeaderApp style={{ "--main-color": userInfo.color }} className='font'>
+            {isEditing ? (
+              <EditUser
+                onEditing={() => {
+                  setIsEditing(false);
+                }}
+                prevUser={userInfo.userName}
+                prevColor={userInfo.color}
+              />
+            ) : (
+              <>
+                Hi , {userInfo.userName}
+                <FiEdit title='Edit user' onClick={editUserData} />
+                <FiExternalLink title='Exit' onClick={logOutHandler} />
+                <FiPlusCircle title='add new todo' onClick={() => showTodoForm(false)} />
+              </>
+            )}
             <FilterTodo
               resetFilters={doResetFilters}
               onFilter={(filters) => {
@@ -167,7 +167,14 @@ const TodosWrapper = () => {
           </HeaderApp>
         </IconContext.Provider>
         <TodosList todos={todos} />
-        {isOpenTodoForm && <TodoForm onSubmit={submitTodoForm} onCancel={cancelTodoForm} todoFormInfo={todoFormInfo} />}
+        {isOpenTodoForm && (
+          <TodoForm
+            onSubmit={submitTodoForm}
+            onCancel={cancelTodoForm}
+            userColor={userInfo.color}
+            todoFormInfo={todoFormInfo}
+          />
+        )}
       </section>
     </todoFormCtx.Provider>
   );

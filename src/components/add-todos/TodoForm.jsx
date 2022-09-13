@@ -9,9 +9,10 @@ import ReactDOM from "react-dom";
 import Container from "../ui/Container";
 const modal = document.getElementById("modal");
 const TodoForm = (props) => {
+  console.log(props);
   const newTodoContent = useRef();
   const [todoTitle, setTodoTitle] = useState(props.todoFormInfo.isEdited ? props.todoFormInfo.title : "");
-  const [todoColor, setTodoColor] = useState(props.todoFormInfo.isEdited ? props.todoFormInfo.color : "#6d72fd");
+  const [todoColor, setTodoColor] = useState(props.todoFormInfo.isEdited ? props.todoFormInfo.color : props.userColor);
   const [isValid, setIsValid] = useState({ isValid: " ", errorMsg: "" });
   const validation = (userInput) => {
     if (userInput.length < 4 || userInput.length > 20) {
@@ -25,7 +26,7 @@ const TodoForm = (props) => {
 
   const confirmTodoData = () => {
     if (!validation(todoTitle)) {
-      setIsValid((prevIsValid) => ({
+      setIsValid(() => ({
         isValid: false,
         errorMsg: "enter between 4 & 20 charecter",
       }));
@@ -52,15 +53,17 @@ const TodoForm = (props) => {
   const closeModal = (e) => {
     if (e.target.classList.contains(styles.container)) props.onCancel();
   };
+  let style = { "--main-color": todoColor }
   return (
     <>
       {ReactDOM.createPortal(
         <div onClick={closeModal} className={styles.container}>
-          <Container style={{ "--main-color": props.todoFormInfo.color }}>
-            <HeaderApp className='font'>
+          <Container >
+            <HeaderApp style={style} className='font'>
               <AddTodoHeader
                 title={props.todoFormInfo.isEdited ? "edit todo" : "add new todo"}
                 onGetTodoColor={getTodoColor}
+                color={todoColor}
               />
             </HeaderApp>
             <div className={styles["add-todo-wrapper"]}>
@@ -86,10 +89,10 @@ const TodoForm = (props) => {
                   ref={newTodoContent}></textarea>
               </div>
               <div className={styles["new-todo-buttons"]}>
-                <button onClick={confirmTodoData} className={commonStyles.button}>
+                <button style={style} onClick={confirmTodoData} className={commonStyles.button}>
                   {props.todoFormInfo.isEdited ? "edit todo" : "add new todo"}
                 </button>
-                <button onClick={props.onCancel} className={commonStyles.button}>
+                <button style={style} onClick={props.onCancel} className={commonStyles.button}>
                   cancel
                 </button>
               </div>

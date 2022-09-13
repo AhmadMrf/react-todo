@@ -24,20 +24,32 @@ function App() {
     setUserData(currentUser);
   };
   const logOutHandle = (logState) => {
+    localStorage.removeItem("ActiveUser");
     setIsLoggedIn(logState);
   };
   const editUserHandler = (currentUser) => {
-    const updatedUsers = users.map((user) => {
-      if (user.id === currentUser.id) return currentUser;
-      return user;
-    });
+    let updatedUsers = undefined;
+    if (currentUser?.doDelete) {
+      updatedUsers = users.filter((user) => user.id !== currentUser.id);
+      logOutHandle(false);
+    } else {
+      updatedUsers = users.map((user) => {
+        if (user.id === currentUser.id) {
+          localStorage.setItem("ActiveUser", JSON.stringify(currentUser.userInfo));
+          return currentUser;
+        }
+        return user;
+      });
+    }
     localStorage.setItem("users", JSON.stringify(updatedUsers));
     setUserData(currentUser);
   };
 
   useEffect(() => {
     if (ActiveUser) {
-      let existedUser = users.find((user) => ActiveUser.userName.toLowerCase() === user.userInfo.userName.toLowerCase());
+      let existedUser = users.find(
+        (user) => ActiveUser.userName.toLowerCase() === user.userInfo.userName.toLowerCase()
+      );
       editUserHandler(existedUser);
       setIsLoggedIn(true);
     }

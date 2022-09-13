@@ -1,0 +1,33 @@
+.editUser{
+  width: 90%;
+}
+.inputs{
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.input-text{
+  gap: 1rem;
+  flex-grow: 2;
+  text-shadow: none;
+}
+.input-text input {
+  width: 100%;
+}
+.input-text input:valid ~ label{
+  display: none;
+}
+.input-text p{
+  background-color: #ffffff;
+  font-size: .7rem;
+  top: -1.2rem;
+  right: unset;
+  left: 0;
+}
+.input-text label{
+  position: absolute;
+  color: #212121;
+  font-size: 1rem;
+  font-weight: 400;
+  left: .5rem;
+}
